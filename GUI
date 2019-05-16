@@ -1,0 +1,263 @@
+//make gui
+import java.util.*;  
+import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import javax.swing.JOptionPane; 
+
+public class HospitalGUI{
+
+   public static void main(String[] args) throws Exception{
+   
+      MyPriorityQueue main = new MyPriorityQueue(); //not sure what this does
+   
+   //frame and panel
+           
+   
+   
+      JFrame frame = new JFrame("Priority Queue");
+     
+      JPanel panel = new JPanel(); 
+      JPanel panel2 = new JPanel(); 
+   
+      Color c = Color.pink;
+      Color m = Color.cyan;
+   
+      panel.setForeground(c);
+      panel.setBackground(c);
+   
+      panel.setLayout(null); 
+   
+      panel.setVisible(true);
+      //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+      frame.setSize(500,500);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //close program when click on x 
+      Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+      frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+   
+   //buttons
+      JButton next = new JButton("Registry");
+      //b1.setBorder(raisedbevel);
+      next.setBackground(Color.RED);
+      next.setBounds(300,420,100,20);
+      JButton back = new JButton("back");
+      //b1.setBorder(raisedbevel);
+      back.setBackground(Color.RED);
+      back.setBounds(300,420,100,20);
+   
+           
+      JButton b1 = new JButton("vacant");
+      //b1.setBorder(raisedbevel);
+      b1.setBackground(m.brighter());
+      b1.setBounds(30,100,100,100);
+      
+      
+      JButton b2 = new JButton("Vacant");
+      b2.setBackground(m.brighter());
+   
+      b2.setBounds(180,100,100,100);
+      JButton b3 = new JButton("Vacant");
+      b3.setBackground(m.brighter());
+   
+      b3.setBounds(330,100,100,100); 
+      JLabel l1 = new JLabel("Operation Room 1");
+      l1.setBounds(30,30,150,100);
+      JLabel l2 = new JLabel("Operation Room 2");
+      l2.setBounds(180,30,150,100);
+      JLabel l3 = new JLabel("Operation Room 3");
+      l3.setBounds(330,30,150,100); 
+      JLabel l4 = new JLabel("Enter patient's name and Priority below");
+      l4.setBounds(30,250,300,30); 
+      JLabel l5 = new JLabel("Click on the rooms to operate!");
+      l5.setBounds(30,200,300,30); 
+      
+      
+   //text field 
+      JTextField t = new JTextField(16);
+      t.setBounds(30,290,150,30); 
+   
+     // create a label to display text 
+      JLabel l = new JLabel("Patient's name and Priority"); 
+      l.setBounds(30,360,400,30); 
+      String names =  main.print().toString();
+      JLabel enqueuedPatients = new JLabel("Waiting List: "); 
+      
+      
+      enqueuedPatients.setBounds(30,200,400,50); 
+      
+   
+   
+     // create a new button 
+      JButton b = new JButton("submit"); 
+      b.setBounds(220,293,100,20); 
+      
+      JLabel oRoom = new JLabel("Patients Currently operated: " + b1.getText()+";    "+ b2.getText()+";    "+b3.getText() ); 
+      oRoom.setBounds(30,100,400,50); 
+      JLabel dequeued = new JLabel("Patient's discharged: " ); 
+      dequeued.setBounds(30,300,500,20);  
+      
+   
+   
+   //xyzField.setBounds(200,200,200,200); 
+      panel2.add(back);
+      panel.add(next);
+      panel.add(b1);
+      panel.add(b2);
+      panel.add(b3);
+      panel.add(l);
+      panel.add(b);
+      panel.add(t);
+      panel.add(l1);
+      panel.add(l2);
+      panel.add(l3);
+      panel.add(l4);
+      panel.add(l5);
+      panel2.add(enqueuedPatients);
+      panel2.add(oRoom);
+      panel2.add(dequeued);
+   
+      frame.add(panel);
+      panel2.setVisible(false);
+      panel2.setLayout(null); 
+      panel.setVisible(true);
+      frame.setVisible(true);  
+   
+   
+   //panel.add(xyzField);  
+      next.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+            
+               //JOptionPane.showMessageDialog(null, "Waiting List is Empty!!");
+               enqueuedPatients.setVisible(true);
+               panel2.setBackground(Color.GREEN);
+               frame.add(panel2);
+               panel.setVisible(false);
+               panel2.setVisible(true);
+            }
+         }
+         );
+      back.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+               //JOptionPane.showMessageDialog(null, "Waiting List is Empty!!");
+               enqueuedPatients.setVisible(true);
+               
+               panel.setVisible(true);
+               panel2.setVisible(false);
+            }
+         }
+         );
+   
+   
+    
+      b1.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+               oRoom.setText("Patients Currently operated: " + b1.getText()+";    "+ b2.getText()+";    "+b3.getText() ); 
+               //JOptionPane.showMessageDialog(null, "Waiting List is Empty!!");
+               dequeued.setText(dequeued.getText() + "; "+b1.getText());
+            
+               if(enqueuedPatients.getText().equals("Waiting List: ")){
+                                                  
+                  JOptionPane.showMessageDialog(null, "Waiting List is Empty!!");
+               
+               }
+               else{
+               
+                  String text = main.deQueue().toString();
+                  b1.setText(text);
+                  enqueuedPatients.setText("Waiting List: "+main.print().toString());
+               
+               }
+            
+            
+            }
+         }
+         );
+   
+      b2.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+               oRoom.setText("Patients Currently operated: " + b1.getText()+";    "+ b2.getText()+";    "+b3.getText() ); 
+            
+               dequeued.setText(dequeued.getText() + "\n"+ " "+b2.getText());
+            
+               if(enqueuedPatients.getText().equals("Waiting List: ")){
+                                                  
+                  JOptionPane.showMessageDialog(null, "Waiting List is Empty!!");
+               
+               }
+               else{
+               
+                  String text = main.deQueue().toString();
+                  b2.setText(text);
+                  enqueuedPatients.setText("Waiting List:"+" \n"+main.print().toString());
+               
+               }
+            }
+         }
+         );
+   
+      b3.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+               oRoom.setText("Patients Currently operated: " + b1.getText()+";    "+ b2.getText()+";    "+b3.getText() ); 
+            
+               dequeued.setText(dequeued.getText() + ";"+ " "+b3.getText());
+            
+               if(enqueuedPatients.getText().equals("Waiting List: ")){
+                                                  
+                  JOptionPane.showMessageDialog(null, "Waiting List is Empty!!");
+               
+               }
+               else{
+               
+                  String text = main.deQueue().toString();
+                  b3.setText(text);
+                  enqueuedPatients.setText("Waiting List: "+main.print().toString());
+               
+               }
+            
+            }
+         }
+         );
+      b.addActionListener(
+         new ActionListener(){
+         
+            public void actionPerformed(ActionEvent e) 
+            {
+              
+               String s = e.getActionCommand(); 
+               if (s.equals("submit")) { 
+               // set the text of the label to the text of the field 
+                  l.setText(t.getText()); 
+                  //enqueuedPatients.setText("Waiting List: "+main.print().toString());
+               
+               // set the text of field to blank 
+                  t.setText(l.getText()+"  ");
+                  getText(l,main); 
+                  enqueuedPatients.setText("Waiting List: "+main.print().toString());
+                  
+               } 
+            }     
+         }
+         );
+   } 
+   public static void getText(JLabel l, MyPriorityQueue main){
+      
+      String a = l.getText();  
+      if(a != "nothing entered"){
+      
+         //String[] str = a.split(",");
+         //String val = str[0];
+         String[] part = a.split("(?<=\\D)(?=\\d)");
+         int integer = Integer.parseInt(part[1]);	
+         main.enQueue(part[0],integer); 
+         //System.out.print(main.enqueue(part[0],integer));  
+      }        
+   }
+    //btnNext = new JButton();
+}
+ 
