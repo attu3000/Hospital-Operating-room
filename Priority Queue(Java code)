@@ -1,0 +1,115 @@
+//Priority Queue
+import java.util.*;
+import java.util.*;
+
+public class MyPriorityQueue {
+
+   class Entry {
+   
+      String str;
+      int priority;
+   
+      public Entry(String o, int p) {
+         str = o;
+         priority = p;
+      }
+      public String toString(){
+         return str+priority+"";
+      }
+   }
+ //end class Entry
+ 
+   public MyPriorityQueue() {
+      list = new ArrayList();
+   }  
+ 
+   public MyPriorityQueue(int capacity) {
+      list = new ArrayList(capacity);
+   }
+
+ //removes object with highest priority
+   public String deQueue() {
+   
+      String go = "";
+      int tempHigh = ((Entry)list.get(0)).priority;
+      int highIndex = 0;
+      int currIndex = 0;
+   
+      for(int i = 0; i < list.size(); i++) {
+         currIndex = i;
+         if(((Entry)list.get(i)).priority > tempHigh) {
+            tempHigh = ((Entry)list.get(i)).priority;
+            highIndex = i;
+            
+            go = ((Entry)list.get(highIndex)).str +""+ ((Entry)list.get(highIndex)).priority;
+         
+         }
+         else if(((Entry)list.get(i)).priority == tempHigh){
+            if(highIndex<currIndex){
+            
+               go = ((Entry)list.get(highIndex)).str+""+((Entry)list.get(highIndex)).priority;
+            
+            }
+            else{
+               go = ((Entry)list.get(currIndex)).str + "" +((Entry)list.get(currIndex)).priority;
+            }
+         }
+      }
+   
+      go = ((Entry)list.get(highIndex)).str;
+      list.remove(highIndex);
+      return go;
+   }
+
+   public void enQueue(String element, int priority) {
+      Entry e = new Entry(element, priority);
+      list.add(e);
+   }
+
+   public boolean isEmpty() {
+      return list.isEmpty();
+   }
+
+   public int length() {
+      return list.size();
+   }
+
+   public void clear(){
+      list.clear();
+   }
+  
+
+   protected ArrayList list;
+   
+   public String print(){
+      String items = ""; 
+      for(int i = 0; i<list.size();i++){
+         items = (items +"  "+ list.get(i)+"\n");
+      }
+      return items;
+   
+   }
+
+   public static void main(String[] args){
+   
+      MyPriorityQueue main = new MyPriorityQueue();
+      //Main main = new Main();
+     
+      main.enQueue("joe",3);
+      main.enQueue("jake",7);
+      main.enQueue("anu",3); 
+      main.enQueue("joe",7);
+      String a = "anu1";
+      String[] part = a.split("(?<=\\D)(?=\\d)");
+      int integer = Integer.parseInt(part[1]);	
+      main.enQueue(part[0],integer); 
+      //System.out.print(main.enQueue(part[0],integer));  
+      //System.out.println("String: "+part[0]);
+      //System.out.println("integer: "+integer);
+      //System.out.print(main.enQueue(part[0],integer));  
+          //     }
+   
+      System.out.println(main.print());
+   
+   }
+}
